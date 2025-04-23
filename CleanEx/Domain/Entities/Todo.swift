@@ -16,13 +16,14 @@ struct Todo {
     let updatedAt: Date
     
     init(
+        id: UUID = UUID(),
         title: String,
         description: String? = nil,
         isCompleted: Bool = false,
         createdAt: Date = Date(),
         updatedAt: Date = Date()
     ) {
-        self.id = UUID()
+        self.id = id
         self.title = title
         self.description = description
         self.isCompleted = isCompleted
