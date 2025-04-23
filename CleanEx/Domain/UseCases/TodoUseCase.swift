@@ -90,7 +90,7 @@ protocol DeleteTodoUseCase {
 }
 
 struct DeleteTodoUseCaseImpl: DeleteTodoUseCase {
-    let todoRepository: TodoRepository
+    private let todoRepository: TodoRepository
     
     init(todoRepository: TodoRepository) {
         self.todoRepository = todoRepository
