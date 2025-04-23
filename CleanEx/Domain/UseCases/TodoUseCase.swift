@@ -43,7 +43,7 @@ struct GetTodoUseCaseImpl: GetTodoUseCase {
 
 // Create
 protocol AddTodoUseCase {
-    func addTodo(_ todo: Todo) async throws
+    func addTodo(title: String, description: String?) async throws
 }
 
 struct AddTodoUseCaseImpl: AddTodoUseCase {
@@ -53,7 +53,8 @@ struct AddTodoUseCaseImpl: AddTodoUseCase {
         self.todoRepository = todoRepository
     }
     
-    func addTodo(_ todo: Todo) async throws {
+    func addTodo(title: String, description: String?) async throws {
+        let todo = Todo(title: title, description: description)
         try await todoRepository.createTodo(todo)
     }
 }
@@ -91,3 +92,11 @@ struct DeleteTodoUseCaseImpl: DeleteTodoUseCase {
         try await todoRepository.deleteTodo(id: id)
     }
 }
+
+/*
+ AddTodo에서 Entity에 description이 있는데, 이를 작성하는 부분이 누락되었음.
+ UseCase에서 이 부분에 대한 로직을 추가해야함.
+ 레파지토리로 보내는 중간에 Todo 객체를 생성하고, 그 생성된 객체를 레파지토리에 보낼거임
+ 하지만 레파지토리는 그 중간 과정을 모르게 해야 하고. 그 중간 과정은 여기서(UseCase)에서 처리될 것.
+ 
+ */
