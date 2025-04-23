@@ -8,9 +8,13 @@
 import Foundation
 
 protocol TodoRepository {
-    func getAllTodos() -> [Todo]
-    func getTodo(id: UUID) -> Todo?
-    func createTodo(_ todo: Todo)
-    func updateTodo(_ todo: Todo)
-    func deleteTodo(id: UUID)
+    func getAllTodos() async -> [Todo]
+    func getTodo(id: UUID) async -> Todo?
+    func createTodo(_ todo: Todo) async
+    func updateTodo(_ todo: Todo) async
+    func deleteTodo(id: UUID) async
 }
+
+// 모든 메서드는 비동기 처리를 위해서. async 키워드를 가져야 함.
+// The reason is it could be heavy work?
+// method name should be neat and clear
