@@ -1,20 +1,13 @@
-//
-//  Todo.swift
-//  CleanEx
-//
-//  Created by 최범수 on 2025-04-23.
-//
-
 import Foundation
 
 struct Todo {
     let id: UUID
-    let title: String
-    let description: String?
-    let isCompleted: Bool
+    var title: String
+    var description: String?
+    var isCompleted: Bool
     let createdAt: Date
-    let updatedAt: Date
-    
+    var updatedAt: Date
+
     init(
         id: UUID = UUID(),
         title: String,
@@ -31,5 +24,3 @@ struct Todo {
         self.updatedAt = updatedAt
     }
 }
-
-// description is optional
