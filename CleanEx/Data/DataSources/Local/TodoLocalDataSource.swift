@@ -9,7 +9,7 @@ protocol TodoLocalDataSource {
     func deleteTodo(id: UUID) async throws
 }
 
-final class TodoLocalDataSourceImpl: TodoLocalDataSource {
+struct TodoLocalDataSourceImpl: TodoLocalDataSource {
     private let modelContext: ModelContext
     
     init(modelContext: ModelContext) {
