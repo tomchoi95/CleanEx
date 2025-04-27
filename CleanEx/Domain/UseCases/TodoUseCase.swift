@@ -34,12 +34,8 @@ struct GetTodoUseCaseImpl: GetTodoUseCase {
 
 protocol AddTodoUseCase {
     func execute(
-        id: UUID,
         title: String,
         description: String?,
-        isCompleted: Bool,
-        createdAt: Date,
-        updatedAt: Date
     ) async throws -> Todo
 }
 
@@ -51,21 +47,10 @@ struct AddTodoUseCaseImpl: AddTodoUseCase {
     }
     
     func execute(
-        id: UUID = UUID(),
         title: String,
         description: String? = nil,
-        isCompleted: Bool = false,
-        createdAt: Date = Date(),
-        updatedAt: Date = Date()
     ) async throws -> Todo {
-        let newTodo = Todo(
-            id: id,
-            title: title,
-            description: description,
-            isCompleted: isCompleted,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
+        let newTodo = Todo(title: title, description: description)
         return try await repository.addTodo(todo: newTodo)
     }
 }
@@ -73,11 +58,9 @@ struct AddTodoUseCaseImpl: AddTodoUseCase {
 protocol UpdateTodoUseCase {
     func execute(
         id: UUID,
-        title: String,
+        title: String?,
         description: String?,
-        isCompleted: Bool,
-        createdAt: Date,
-        updatedAt: Date
+        isCompleted: Bool?,
     ) async throws -> Todo
 }
 
@@ -90,19 +73,19 @@ struct UpdateTodoUseCaseImpl: UpdateTodoUseCase {
     
     func execute(
         id: UUID,
-        title: String,
+        title: String?,
         description: String?,
-        isCompleted: Bool,
-        createdAt: Date,
-        updatedAt: Date
+        isCompleted: Bool?,
     ) async throws -> Todo {
+        let todo = try await repository.getTodo(id: id)
+        
         let todoToUpdate = Todo(
-            id: id,
-            title: title,
-            description: description,
-            isCompleted: isCompleted,
-            createdAt: createdAt,
-            updatedAt: updatedAt
+            id: todo.id,
+            title: title ?? todo.title,
+            description: description ?? todo.description,
+            isCompleted: isCompleted ?? todo.isCompleted,
+            createdAt: todo.createdAt,
+            updatedAt: Date()
         )
         return try await repository.updateTodo(todo: todoToUpdate)
     }
