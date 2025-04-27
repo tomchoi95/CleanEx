@@ -17,13 +17,13 @@ protocol TodoRepository {
     /// - Parameter todo: 생성할 할 일
     /// - Returns: 생성된 할 일
     /// - Throws: 데이터 접근 중 발생한 에러
-    func createTodo(_ todo: Todo) async throws -> Todo
+    func addTodo(todo: Todo) async throws -> Todo
     
     /// 기존 할 일을 수정합니다.
     /// - Parameter todo: 수정할 할 일
     /// - Returns: 수정된 할 일
     /// - Throws: 데이터 접근 중 발생한 에러
-    func updateTodo(_ todo: Todo) async throws -> Todo
+    func updateTodo(todo: Todo) async throws -> Todo
     
     /// 할 일을 삭제합니다.
     /// - Parameter id: 삭제할 할 일의 고유 식별자
