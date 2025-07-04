@@ -36,6 +36,7 @@ protocol AddTodoUseCase {
     func execute(
         title: String,
         description: String?,
+        priority: TodoPriority
     ) async throws -> Todo
 }
 
@@ -49,8 +50,9 @@ struct AddTodoUseCaseImpl: AddTodoUseCase {
     func execute(
         title: String,
         description: String? = nil,
+        priority: TodoPriority = .medium
     ) async throws -> Todo {
-        let newTodo = Todo(title: title, description: description)
+        let newTodo = Todo(title: title, description: description, priority: priority)
         return try await repository.addTodo(todo: newTodo)
     }
 }
@@ -61,6 +63,7 @@ protocol UpdateTodoUseCase {
         title: String?,
         description: String?,
         isCompleted: Bool?,
+        priority: TodoPriority?
     ) async throws -> Todo
 }
 
@@ -76,6 +79,7 @@ struct UpdateTodoUseCaseImpl: UpdateTodoUseCase {
         title: String?,
         description: String?,
         isCompleted: Bool?,
+        priority: TodoPriority?
     ) async throws -> Todo {
         let todo = try await repository.getTodo(id: id)
         
@@ -84,6 +88,8 @@ struct UpdateTodoUseCaseImpl: UpdateTodoUseCase {
             title: title ?? todo.title,
             description: description ?? todo.description,
             isCompleted: isCompleted ?? todo.isCompleted,
+            categoryId: todo.categoryId,
+            priority: priority ?? todo.priority,
             createdAt: todo.createdAt,
             updatedAt: Date()
         )

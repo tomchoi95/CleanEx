@@ -5,6 +5,8 @@ struct TodoDTO: Codable {
     let title: String
     let description: String?
     let isCompleted: Bool
+    let categoryId: UUID?
+    let priority: String
     let createdAt: Date
     let updatedAt: Date
 }
@@ -16,6 +18,8 @@ extension TodoDTO {
             title: title,
             description: description,
             isCompleted: isCompleted,
+            categoryId: categoryId,
+            priority: TodoPriority(rawValue: priority) ?? .medium,
             createdAt: createdAt,
             updatedAt: updatedAt
         )
@@ -27,6 +31,8 @@ extension TodoDTO {
             title: entity.title,
             description: entity.description,
             isCompleted: entity.isCompleted,
+            categoryId: entity.categoryId,
+            priority: entity.priority.rawValue,
             createdAt: entity.createdAt,
             updatedAt: entity.updatedAt
         )

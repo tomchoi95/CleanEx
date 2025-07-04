@@ -27,6 +27,8 @@ struct TodoLocalDataSourceImpl: TodoLocalDataSource {
                 title: $0.title ,
                 description: $0.todoDescription,
                 isCompleted: $0.isCompleted,
+                categoryId: $0.categoryId,
+                priority: $0.priority,
                 createdAt: $0.createdAt,
                 updatedAt: $0.updatedAt
             )
@@ -43,6 +45,8 @@ struct TodoLocalDataSourceImpl: TodoLocalDataSource {
             title: todo.title,
             description: todo.todoDescription,
             isCompleted: todo.isCompleted,
+            categoryId: todo.categoryId,
+            priority: todo.priority,
             createdAt: todo.createdAt,
             updatedAt: todo.updatedAt
         )
@@ -54,6 +58,8 @@ struct TodoLocalDataSourceImpl: TodoLocalDataSource {
             title: todo.title,
             todoDescription: todo.description,
             isCompleted: todo.isCompleted,
+            categoryId: todo.categoryId,
+            priority: todo.priority,
             createdAt: todo.createdAt,
             updatedAt: todo.updatedAt
         )
@@ -73,14 +79,23 @@ struct TodoLocalDataSourceImpl: TodoLocalDataSource {
         guard let todoModel = try modelContext.fetch(descriptor).first else { throw LocalDataSourceError.notFound }
         todoModel.title = todo.title
         todoModel.todoDescription = todo.description
-        todoModel.createdAt = todo.createdAt
+        todoModel.isCompleted = todo.isCompleted
+        todoModel.categoryId = todo.categoryId
+        todoModel.priority = todo.priority
         todoModel.updatedAt = Date()
         do {
             try modelContext.save()
         } catch {
             throw LocalDataSourceError.saveFailed
         }
-        return todo
+        return TodoDTO(
+            id: todoModel.id,
+            title: todoModel.title,
+            description: todoModel.todoDescription,
+            isCompleted: todoModel.isCompleted,
+            createdAt: todoModel.createdAt,
+            updatedAt: todoModel.updatedAt
+        )
     }
     
     func deleteTodo(id: UUID) async throws {

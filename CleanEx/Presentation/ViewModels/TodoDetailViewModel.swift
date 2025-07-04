@@ -32,7 +32,7 @@ final class TodoDetailViewModel: ObservableObject {
         }
     }
     
-    func updateTodo(title: String, description: String?, isCompleted: Bool) {
+    func updateTodo(title: String, description: String?, isCompleted: Bool, priority: TodoPriority) {
         guard let todo = todo else { return }
         
         Task {
@@ -41,7 +41,8 @@ final class TodoDetailViewModel: ObservableObject {
                     id: todo.id,
                     title: title,
                     description: description,
-                    isCompleted: isCompleted
+                    isCompleted: isCompleted,
+                    priority: priority
                 )
             } catch {
                 self.error = .failedToUpdate

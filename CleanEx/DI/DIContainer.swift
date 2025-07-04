@@ -7,31 +7,72 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 final class DIContainer {
     static let shared = DIContainer()
     
-    private init() {}
+    private let modelContainer: ModelContainer
+    
+    private init() {
+        do {
+            modelContainer = try ModelContainer(for: TodoLocalModel.self)
+        } catch {
+            fatalError("Failed to create ModelContainer: \(error)")
+        }
+    }
+    
+    // MARK: - Data Sources
+    private lazy var todoLocalDataSource: TodoLocalDataSource = {
+        return TodoLocalDataSourceImpl(modelContext: modelContainer.mainContext)
+    }()
     
     // MARK: - Repositories
     private lazy var todoRepository: TodoRepository = {
-        return TodoRepositoryImpl(
-            localDataSource: TodoLocalDataSource()
-        )
+        return TodoRepositoryImpl(dataSource: todoLocalDataSource)
     }()
     
     // MARK: - UseCases
-    private lazy var todoUseCase: TodoUseCase = {
-        return TodoUseCaseImpl(repository: todoRepository)
+    private lazy var getAllTodosUseCase: GetAllTodosUseCase = {
+        return GetAllTodosUseCaseImpl(repository: todoRepository)
+    }()
+    
+    private lazy var getTodoUseCase: GetTodoUseCase = {
+        return GetTodoUseCaseImpl(repository: todoRepository)
+    }()
+    
+    private lazy var addTodoUseCase: AddTodoUseCase = {
+        return AddTodoUseCaseImpl(repository: todoRepository)
+    }()
+    
+    private lazy var updateTodoUseCase: UpdateTodoUseCase = {
+        return UpdateTodoUseCaseImpl(repository: todoRepository)
+    }()
+    
+    private lazy var deleteTodoUseCase: DeleteTodoUseCase = {
+        return DeleteTodoUseCaseImpl(repository: todoRepository)
     }()
     
     // MARK: - ViewModels
     func makeTodoListViewModel() -> TodoListViewModel {
-        return TodoListViewModel(useCase: todoUseCase)
+        return TodoListViewModel(
+            getAllTodosUseCase: getAllTodosUseCase,
+            deleteTodoUseCase: deleteTodoUseCase
+        )
     }
     
-    func makeTodoDetailViewModel(todo: Todo) -> TodoDetailViewModel {
-        return TodoDetailViewModel(useCase: todoUseCase, todo: todo)
+    func makeTodoDetailViewModel() -> TodoDetailViewModel {
+        return TodoDetailViewModel(
+            getTodoUseCase: getTodoUseCase,
+            updateTodoUseCase: updateTodoUseCase
+        )
+    }
+    
+    func makeTodoFormViewModel() -> TodoFormViewModel {
+        return TodoFormViewModel(
+            addTodoUseCase: addTodoUseCase,
+            updateTodoUseCase: updateTodoUseCase
+        )
     }
     
     // MARK: - Views
@@ -39,7 +80,11 @@ final class DIContainer {
         TodoListView(viewModel: makeTodoListViewModel())
     }
     
-    func makeTodoDetailView(todo: Todo) -> some View {
-        TodoDetailView(viewModel: makeTodoDetailViewModel(todo: todo))
+    func makeTodoDetailView(todoId: UUID) -> some View {
+        TodoDetailView(viewModel: makeTodoDetailViewModel(), todoId: todoId)
+    }
+    
+    func makeTodoFormView(todo: Todo? = nil) -> some View {
+        TodoFormView(viewModel: makeTodoFormViewModel(), todo: todo)
     }
 }

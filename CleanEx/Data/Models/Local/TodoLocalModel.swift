@@ -7,6 +7,8 @@ final class TodoLocalModel {
     var title: String
     var todoDescription: String?
     var isCompleted: Bool
+    var categoryId: UUID?
+    var priority: String
     var createdAt: Date
     var updatedAt: Date
     
@@ -15,6 +17,8 @@ final class TodoLocalModel {
         title: String,
         todoDescription: String? = nil,
         isCompleted: Bool = false,
+        categoryId: UUID? = nil,
+        priority: String = "medium",
         createdAt: Date = Date(),
         updatedAt: Date = Date()
     ) {
@@ -22,6 +26,8 @@ final class TodoLocalModel {
         self.title = title
         self.todoDescription = todoDescription
         self.isCompleted = isCompleted
+        self.categoryId = categoryId
+        self.priority = priority
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
