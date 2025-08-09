@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct CleanExApp: App {
@@ -13,5 +14,6 @@ struct CleanExApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: [TodoLocalModel.self])
     }
 }
