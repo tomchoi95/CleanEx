@@ -52,6 +52,12 @@ final class DIContainer {
     private lazy var searchTodosUseCase: SearchTodosUseCase = {
         SearchTodosUseCaseImpl(repository: todoRepository)
     }()
+    private lazy var markAllCompletedUseCase: MarkAllCompletedUseCase = {
+        MarkAllCompletedUseCaseImpl(repository: todoRepository)
+    }()
+    private lazy var deleteCompletedTodosUseCase: DeleteCompletedTodosUseCase = {
+        DeleteCompletedTodosUseCaseImpl(repository: todoRepository)
+    }()
     
     // MARK: - ViewModels
     func makeTodoListViewModel() -> TodoListViewModel {
@@ -60,7 +66,9 @@ final class DIContainer {
             deleteTodoUseCase: deleteTodoUseCase,
             addTodoUseCase: addTodoUseCase,
             toggleCompletionUseCase: toggleTodoCompletionUseCase,
-            searchTodosUseCase: searchTodosUseCase
+            searchTodosUseCase: searchTodosUseCase,
+            markAllCompletedUseCase: markAllCompletedUseCase,
+            deleteCompletedTodosUseCase: deleteCompletedTodosUseCase
         )
     }
     

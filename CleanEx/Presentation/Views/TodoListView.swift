@@ -27,8 +27,8 @@ struct TodoListView: View {
                 }
             }
             
-            // Search & Filters
-            HStack {
+            // Search, Filters, Sort
+            HStack(spacing: 8) {
                 TextField("검색", text: $viewModel.searchText)
                     .textFieldStyle(.roundedBorder)
                     .onSubmit { viewModel.applyFilters() }
@@ -47,7 +47,34 @@ struct TodoListView: View {
                 } label: {
                     Label("우선순위", systemImage: "flag")
                 }
+                Menu {
+                    Button("생성일") { viewModel.setSort(key: .createdAt, ascending: viewModel.sortAscending) }
+                    Button("수정일") { viewModel.setSort(key: .updatedAt, ascending: viewModel.sortAscending) }
+                    Button("마감일") { viewModel.setSort(key: .dueDate, ascending: viewModel.sortAscending) }
+                    Button("우선순위") { viewModel.setSort(key: .priority, ascending: viewModel.sortAscending) }
+                    Button("제목") { viewModel.setSort(key: .title, ascending: viewModel.sortAscending) }
+                    Button("정렬 해제") { viewModel.setSort(key: nil, ascending: viewModel.sortAscending) }
+                } label: {
+                    Label("정렬", systemImage: "arrow.up.arrow.down")
+                }
+                Toggle(isOn: Binding(get: { viewModel.sortAscending }, set: { viewModel.setSort(key: viewModel.sortKey, ascending: $0) })) {
+                    Image(systemName: viewModel.sortAscending ? "arrow.up" : "arrow.down")
+                }
+                .toggleStyle(.button)
+                .help("정렬 방향")
             }
+            
+            // Stats & Bulk actions
+            HStack {
+                Label("전체: \(viewModel.totalCount)", systemImage: "list.number")
+                Label("진행중: \(viewModel.activeCount)", systemImage: "circle")
+                Label("완료: \(viewModel.completedCount)", systemImage: "checkmark.circle")
+                Spacer()
+                Button("모두 완료") { viewModel.markAllAsCompleted() }
+                Button("완료 삭제") { viewModel.deleteCompleted() }
+            }
+            .font(.caption)
+            .foregroundStyle(.secondary)
             
             if viewModel.isLoading {
                 ProgressView()
@@ -73,7 +100,7 @@ struct TodoListView: View {
                                 if let date = todo.dueDate {
                                     Text(date, style: .date)
                                         .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(isOverdue(todo) ? .red : .secondary)
                                 }
                             }
                             Spacer()
@@ -98,6 +125,11 @@ struct TodoListView: View {
         }, set: { _ in viewModel.error = nil })) { wrapper in
             Alert(title: Text("오류"), message: Text(wrapper.error.localizedDescription), dismissButton: .default(Text("확인")))
         }
+    }
+    
+    private func isOverdue(_ todo: Todo) -> Bool {
+        guard let due = todo.dueDate else { return false }
+        return !todo.isCompleted && due < Date()
     }
     
     private func priorityLabel(_ p: TodoPriority) -> String {
@@ -128,7 +160,9 @@ private struct ErrorWrapper: Identifiable {
         deleteTodoUseCase: DeleteTodoUseCaseImpl(repository: DummyRepo()),
         addTodoUseCase: AddTodoUseCaseImpl(repository: DummyRepo()),
         toggleCompletionUseCase: ToggleTodoCompletionUseCaseImpl(repository: DummyRepo()),
-        searchTodosUseCase: SearchTodosUseCaseImpl(repository: DummyRepo())
+        searchTodosUseCase: SearchTodosUseCaseImpl(repository: DummyRepo()),
+        markAllCompletedUseCase: MarkAllCompletedUseCaseImpl(repository: DummyRepo()),
+        deleteCompletedTodosUseCase: DeleteCompletedTodosUseCaseImpl(repository: DummyRepo())
     ), container: container)
 }
 

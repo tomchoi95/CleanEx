@@ -144,10 +144,34 @@ struct ToggleTodoCompletionUseCaseImpl: ToggleTodoCompletionUseCase {
     }
 }
 
+enum TodoSortKey {
+    case createdAt
+    case updatedAt
+    case dueDate
+    case priority
+    case title
+}
+
 struct TodoSearchCriteria {
     let query: String?
     let isCompleted: Bool?
     let priority: TodoPriority?
+    let sortKey: TodoSortKey?
+    let ascending: Bool
+    
+    init(
+        query: String? = nil,
+        isCompleted: Bool? = nil,
+        priority: TodoPriority? = nil,
+        sortKey: TodoSortKey? = nil,
+        ascending: Bool = true
+    ) {
+        self.query = query
+        self.isCompleted = isCompleted
+        self.priority = priority
+        self.sortKey = sortKey
+        self.ascending = ascending
+    }
 }
 
 protocol SearchTodosUseCase {
@@ -177,6 +201,78 @@ struct SearchTodosUseCaseImpl: SearchTodosUseCase {
             guard let priority = criteria.priority else { return true }
             return todo.priority == priority
         }
-        return filteredByPriority
+        let sorted: [Todo]
+        if let sortKey = criteria.sortKey {
+            sorted = filteredByPriority.sorted { lhs, rhs in
+                switch sortKey {
+                case .createdAt:
+                    return criteria.ascending ? lhs.createdAt < rhs.createdAt : lhs.createdAt > rhs.createdAt
+                case .updatedAt:
+                    return criteria.ascending ? lhs.updatedAt < rhs.updatedAt : lhs.updatedAt > rhs.updatedAt
+                case .dueDate:
+                    let l = lhs.dueDate ?? Date.distantFuture
+                    let r = rhs.dueDate ?? Date.distantFuture
+                    return criteria.ascending ? l < r : l > r
+                case .priority:
+                    return criteria.ascending ? lhs.priority.rawValue < rhs.priority.rawValue : lhs.priority.rawValue > rhs.priority.rawValue
+                case .title:
+                    return criteria.ascending ? lhs.title.localizedCompare(rhs.title) == .orderedAscending : lhs.title.localizedCompare(rhs.title) == .orderedDescending
+                }
+            }
+        } else {
+            sorted = filteredByPriority
+        }
+        return sorted
+    }
+}
+
+protocol MarkAllCompletedUseCase {
+    func execute(criteria: TodoSearchCriteria) async throws
+}
+
+struct MarkAllCompletedUseCaseImpl: MarkAllCompletedUseCase {
+    private let repository: TodoRepository
+    
+    init(repository: TodoRepository) {
+        self.repository = repository
+    }
+    
+    func execute(criteria: TodoSearchCriteria) async throws {
+        // Mark all matching todos as completed
+        let search = SearchTodosUseCaseImpl(repository: repository)
+        let todos = try await search.execute(criteria: criteria)
+        for todo in todos where todo.isCompleted == false {
+            let updated = Todo(
+                id: todo.id,
+                title: todo.title,
+                description: todo.description,
+                isCompleted: true,
+                priority: todo.priority,
+                dueDate: todo.dueDate,
+                createdAt: todo.createdAt,
+                updatedAt: Date()
+            )
+            _ = try await repository.updateTodo(todo: updated)
+        }
+    }
+}
+
+protocol DeleteCompletedTodosUseCase {
+    func execute(criteria: TodoSearchCriteria) async throws
+}
+
+struct DeleteCompletedTodosUseCaseImpl: DeleteCompletedTodosUseCase {
+    private let repository: TodoRepository
+    
+    init(repository: TodoRepository) {
+        self.repository = repository
+    }
+    
+    func execute(criteria: TodoSearchCriteria) async throws {
+        let search = SearchTodosUseCaseImpl(repository: repository)
+        let todos = try await search.execute(criteria: criteria)
+        for todo in todos where todo.isCompleted {
+            try await repository.deleteTodo(id: todo.id)
+        }
     }
 }

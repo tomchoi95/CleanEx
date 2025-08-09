@@ -7,6 +7,8 @@ final class TodoListViewModel: ObservableObject {
     private let addTodoUseCase: AddTodoUseCase
     private let toggleCompletionUseCase: ToggleTodoCompletionUseCase
     private let searchTodosUseCase: SearchTodosUseCase
+    private let markAllCompletedUseCase: MarkAllCompletedUseCase
+    private let deleteCompletedTodosUseCase: DeleteCompletedTodosUseCase
     
     @Published private(set) var todos: [Todo] = []
     @Published private(set) var error: TodoViewError?
@@ -15,19 +17,29 @@ final class TodoListViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var filterCompleted: Bool? = nil // nil: all, true: completed, false: active
     @Published var selectedPriority: TodoPriority? = nil
+    @Published var sortKey: TodoSortKey? = .createdAt
+    @Published var sortAscending: Bool = false
+    
+    @Published private(set) var totalCount: Int = 0
+    @Published private(set) var completedCount: Int = 0
+    @Published private(set) var activeCount: Int = 0
     
     init(
         getAllTodosUseCase: GetAllTodosUseCase,
         deleteTodoUseCase: DeleteTodoUseCase,
         addTodoUseCase: AddTodoUseCase,
         toggleCompletionUseCase: ToggleTodoCompletionUseCase,
-        searchTodosUseCase: SearchTodosUseCase
+        searchTodosUseCase: SearchTodosUseCase,
+        markAllCompletedUseCase: MarkAllCompletedUseCase,
+        deleteCompletedTodosUseCase: DeleteCompletedTodosUseCase
     ) {
         self.getAllTodosUseCase = getAllTodosUseCase
         self.deleteTodoUseCase = deleteTodoUseCase
         self.addTodoUseCase = addTodoUseCase
         self.toggleCompletionUseCase = toggleCompletionUseCase
         self.searchTodosUseCase = searchTodosUseCase
+        self.markAllCompletedUseCase = markAllCompletedUseCase
+        self.deleteCompletedTodosUseCase = deleteCompletedTodosUseCase
     }
     
     func loadTodos() {
@@ -37,6 +49,7 @@ final class TodoListViewModel: ObservableObject {
             
             do {
                 todos = try await getAllTodosUseCase.execute()
+                recalcStats(all: todos)
             } catch {
                 self.error = .failedToLoad
             }
@@ -83,12 +96,54 @@ final class TodoListViewModel: ObservableObject {
             let criteria = TodoSearchCriteria(
                 query: query ?? searchText,
                 isCompleted: isCompleted ?? filterCompleted,
-                priority: priority ?? selectedPriority
+                priority: priority ?? selectedPriority,
+                sortKey: sortKey,
+                ascending: sortAscending
             )
             do {
-                todos = try await searchTodosUseCase.execute(criteria: criteria)
+                let result = try await searchTodosUseCase.execute(criteria: criteria)
+                todos = result
+                recalcStats(all: try await getAllTodosUseCase.execute())
             } catch {
                 self.error = .failedToLoad
+            }
+        }
+    }
+    
+    func setSort(key: TodoSortKey?, ascending: Bool) {
+        sortKey = key
+        sortAscending = ascending
+        applyFilters()
+    }
+    
+    func markAllAsCompleted() {
+        Task {
+            let criteria = TodoSearchCriteria(
+                query: searchText,
+                isCompleted: false,
+                priority: selectedPriority
+            )
+            do {
+                try await markAllCompletedUseCase.execute(criteria: criteria)
+                await refreshWithCurrentFilters()
+            } catch {
+                self.error = .failedToUpdate
+            }
+        }
+    }
+    
+    func deleteCompleted() {
+        Task {
+            let criteria = TodoSearchCriteria(
+                query: searchText,
+                isCompleted: true,
+                priority: selectedPriority
+            )
+            do {
+                try await deleteCompletedTodosUseCase.execute(criteria: criteria)
+                await refreshWithCurrentFilters()
+            } catch {
+                self.error = .failedToDelete
             }
         }
     }
@@ -97,12 +152,22 @@ final class TodoListViewModel: ObservableObject {
         let criteria = TodoSearchCriteria(
             query: searchText,
             isCompleted: filterCompleted,
-            priority: selectedPriority
+            priority: selectedPriority,
+            sortKey: sortKey,
+            ascending: sortAscending
         )
         do {
-            todos = try await searchTodosUseCase.execute(criteria: criteria)
+            let result = try await searchTodosUseCase.execute(criteria: criteria)
+            todos = result
+            recalcStats(all: try await getAllTodosUseCase.execute())
         } catch {
             self.error = .failedToLoad
         }
+    }
+    
+    private func recalcStats(all: [Todo]) {
+        totalCount = all.count
+        completedCount = all.filter { $0.isCompleted }.count
+        activeCount = totalCount - completedCount
     }
 }
