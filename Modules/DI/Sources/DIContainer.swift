@@ -8,21 +8,24 @@
 import Foundation
 import SwiftUI
 import SwiftData
+import Domain
+import Data
+import Presentation
 
-final class DIContainer {
-    static func make(modelContext: ModelContext) -> DIContainer {
-        return DIContainer(modelContext: modelContext)
-    }
+final class DIContainer: ObservableObject {
+    static let shared = DIContainer()
     
-    private let modelContext: ModelContext
+    private var modelContext: ModelContext?
     
-    private init(modelContext: ModelContext) {
+    private init() {}
+    
+    func configure(with modelContext: ModelContext) {
         self.modelContext = modelContext
     }
     
     // MARK: - DataSources
     private lazy var todoLocalDataSource: TodoLocalDataSource = {
-        TodoLocalDataSourceImpl(modelContext: modelContext)
+        TodoLocalDataSourceImpl(modelContext: modelContext!)
     }()
     
     // MARK: - Repositories
