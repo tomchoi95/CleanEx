@@ -158,19 +158,22 @@ struct TodoSearchCriteria {
     let priority: TodoPriority?
     let sortKey: TodoSortKey?
     let ascending: Bool
+    let dueOn: Date?
     
     init(
         query: String? = nil,
         isCompleted: Bool? = nil,
         priority: TodoPriority? = nil,
         sortKey: TodoSortKey? = nil,
-        ascending: Bool = true
+        ascending: Bool = true,
+        dueOn: Date? = nil
     ) {
         self.query = query
         self.isCompleted = isCompleted
         self.priority = priority
         self.sortKey = sortKey
         self.ascending = ascending
+        self.dueOn = dueOn
     }
 }
 
@@ -201,9 +204,14 @@ struct SearchTodosUseCaseImpl: SearchTodosUseCase {
             guard let priority = criteria.priority else { return true }
             return todo.priority == priority
         }
+        let filteredByDueDate = filteredByPriority.filter { todo in
+            guard let targetDate = criteria.dueOn else { return true }
+            guard let due = todo.dueDate else { return false }
+            return Calendar.current.isDate(due, inSameDayAs: targetDate)
+        }
         let sorted: [Todo]
         if let sortKey = criteria.sortKey {
-            sorted = filteredByPriority.sorted { lhs, rhs in
+            sorted = filteredByDueDate.sorted { lhs, rhs in
                 switch sortKey {
                 case .createdAt:
                     return criteria.ascending ? lhs.createdAt < rhs.createdAt : lhs.createdAt > rhs.createdAt
@@ -220,7 +228,7 @@ struct SearchTodosUseCaseImpl: SearchTodosUseCase {
                 }
             }
         } else {
-            sorted = filteredByPriority
+            sorted = filteredByDueDate
         }
         return sorted
     }

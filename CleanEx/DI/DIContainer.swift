@@ -82,6 +82,16 @@ final class DIContainer {
         return vm
     }
     
+    func makeTodoCalendarViewModel() -> TodoCalendarViewModel {
+        TodoCalendarViewModel(
+            addTodoUseCase: addTodoUseCase,
+            updateTodoUseCase: updateTodoUseCase,
+            deleteTodoUseCase: deleteTodoUseCase,
+            toggleCompletionUseCase: toggleTodoCompletionUseCase,
+            searchTodosUseCase: searchTodosUseCase
+        )
+    }
+    
     // MARK: - Views
     func makeTodoListView() -> some View {
         TodoListView(viewModel: makeTodoListViewModel(), container: self)
@@ -89,5 +99,9 @@ final class DIContainer {
     
     func makeTodoDetailView(todoId: UUID) -> some View {
         TodoDetailView(viewModel: makeTodoDetailViewModel(todoId: todoId))
+    }
+    
+    func makeTodoCalendarView() -> some View {
+        TodoCalendarView(viewModel: makeTodoCalendarViewModel())
     }
 }
