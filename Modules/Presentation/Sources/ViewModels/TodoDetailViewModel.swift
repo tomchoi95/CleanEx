@@ -1,32 +1,27 @@
 import Foundation
+import Domain
 
 @MainActor
-final class TodoDetailViewModel: ObservableObject {
-    private let getTodoUseCase: GetTodoUseCase
-    private let updateTodoUseCase: UpdateTodoUseCase
-    private let toggleCompletionUseCase: ToggleTodoCompletionUseCase
+public final class TodoDetailViewModel: ObservableObject {
+    private let todoUseCase: TodoUseCaseProtocol
+    private let todoId: UUID
     
-    @Published private(set) var todo: Todo?
-    @Published private(set) var error: TodoViewError?
-    @Published private(set) var isLoading = false
+    @Published public private(set) var todo: Todo?
+    @Published public private(set) var error: TodoViewError?
+    @Published public private(set) var isLoading = false
     
-    init(
-        getTodoUseCase: GetTodoUseCase,
-        updateTodoUseCase: UpdateTodoUseCase,
-        toggleCompletionUseCase: ToggleTodoCompletionUseCase
-    ) {
-        self.getTodoUseCase = getTodoUseCase
-        self.updateTodoUseCase = updateTodoUseCase
-        self.toggleCompletionUseCase = toggleCompletionUseCase
+    public init(todoId: UUID, todoUseCase: TodoUseCaseProtocol) {
+        self.todoId = todoId
+        self.todoUseCase = todoUseCase
     }
     
-    func loadTodo(id: UUID) {
+    public func loadTodo() {
         Task {
             isLoading = true
             error = nil
             
             do {
-                todo = try await getTodoUseCase.execute(id: id)
+                todo = try await todoUseCase.getTodo(id: todoId)
             } catch {
                 self.error = .failedToLoad
             }
@@ -35,30 +30,33 @@ final class TodoDetailViewModel: ObservableObject {
         }
     }
     
-    func updateTodo(title: String, description: String?, isCompleted: Bool, priority: TodoPriority, dueDate: Date?) {
-        guard let todo = todo else { return }
+    public func updateTodo(title: String, description: String?, isCompleted: Bool, priority: TodoPriority, dueDate: Date?) {
+        guard var currentTodo = todo else { return }
         
         Task {
             do {
-                self.todo = try await updateTodoUseCase.execute(
-                    id: todo.id,
-                    title: title,
-                    description: description,
-                    isCompleted: isCompleted,
-                    priority: priority,
-                    dueDate: dueDate
-                )
+                currentTodo.title = title
+                currentTodo.description = description
+                currentTodo.isCompleted = isCompleted
+                currentTodo.priority = priority
+                currentTodo.dueDate = dueDate
+                currentTodo.updatedAt = Date()
+                
+                todo = try await todoUseCase.updateTodo(todo: currentTodo)
             } catch {
                 self.error = .failedToUpdate
             }
         }
     }
     
-    func toggleCompletion() {
-        guard let todo = todo else { return }
+    public func toggleCompletion() {
+        guard var currentTodo = todo else { return }
+        
         Task {
             do {
-                self.todo = try await toggleCompletionUseCase.execute(id: todo.id)
+                currentTodo.isCompleted.toggle()
+                currentTodo.updatedAt = Date()
+                todo = try await todoUseCase.updateTodo(todo: currentTodo)
             } catch {
                 self.error = .failedToUpdate
             }

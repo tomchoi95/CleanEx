@@ -1,18 +1,19 @@
 import Foundation
 import SwiftData
+import Domain
 
 @Model
-final class TodoLocalModel {
-    var id: UUID
-    var title: String
-    var todoDescription: String?
-    var isCompleted: Bool
-    var priority: Int
-    var dueDate: Date?
-    var createdAt: Date
-    var updatedAt: Date
+public final class TodoLocalModel {
+    public var id: UUID
+    public var title: String
+    public var todoDescription: String?
+    public var isCompleted: Bool
+    public var priority: Int
+    public var dueDate: Date?
+    public var createdAt: Date
+    public var updatedAt: Date
     
-    init(
+    public init(
         id: UUID = UUID(),
         title: String,
         todoDescription: String? = nil,

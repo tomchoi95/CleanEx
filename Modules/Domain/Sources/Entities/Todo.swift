@@ -1,22 +1,22 @@
 import Foundation
 
-enum TodoPriority: Int, CaseIterable {
+public enum TodoPriority: Int, CaseIterable {
     case low = 0
     case medium = 1
     case high = 2
 }
 
-struct Todo {
-    let id: UUID
-    var title: String
-    var description: String?
-    var isCompleted: Bool
-    var priority: TodoPriority
-    var dueDate: Date?
-    let createdAt: Date
-    var updatedAt: Date
+public struct Todo {
+    public let id: UUID
+    public var title: String
+    public var description: String?
+    public var isCompleted: Bool
+    public var priority: TodoPriority
+    public var dueDate: Date?
+    public let createdAt: Date
+    public var updatedAt: Date
 
-    init(
+    public init(
         id: UUID = UUID(),
         title: String,
         description: String? = nil,

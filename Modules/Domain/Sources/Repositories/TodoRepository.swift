@@ -1,7 +1,7 @@
 import Foundation
 
 /// 할 일 데이터에 대한 접근을 정의하는 인터페이스
-protocol TodoRepository {
+public protocol TodoRepository {
     /// 모든 할 일 목록을 가져옵니다.
     /// - Returns: 할 일 목록
     /// - Throws: 데이터 접근 중 발생한 에러

@@ -1,105 +1,125 @@
 import SwiftUI
+import Domain
 
-struct TodoDetailView: View {
-    @ObservedObject var viewModel: TodoDetailViewModel
+public struct TodoDetailView: View {
+    @ObservedObject public var viewModel: TodoDetailViewModel
     
     @State private var title: String = ""
     @State private var description: String = ""
     @State private var isCompleted: Bool = false
     @State private var priority: TodoPriority = .medium
     @State private var dueDate: Date? = nil
-    @State private var showDatePicker = false
+    @State private var showDatePicker: Bool = false
     
-    var body: some View {
-        Form {
-            Section("기본 정보") {
-                TextField("제목", text: Binding(
-                    get: { title },
-                    set: { title = $0 }
-                ))
-                TextField("설명", text: Binding(
-                    get: { description },
-                    set: { description = $0 }
-                ))
-                Toggle("완료", isOn: Binding(
-                    get: { isCompleted },
-                    set: { isCompleted = $0 }
-                ))
-            }
-            Section("우선순위") {
-                Picker("우선순위", selection: $priority) {
-                    Text("낮음").tag(TodoPriority.low)
-                    Text("보통").tag(TodoPriority.medium)
-                    Text("높음").tag(TodoPriority.high)
+    public init(viewModel: TodoDetailViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    public var body: some View {
+        Group {
+            if viewModel.isLoading {
+                ProgressView()
+            } else if let todo = viewModel.todo {
+                Form {
+                    Section("기본 정보") {
+                        TextField("제목", text: $title)
+                        TextField("설명", text: $description, axis: .vertical)
+                            .lineLimit(3...6)
+                        Toggle("완료", isOn: $isCompleted)
+                    }
+                    
+                    Section("우선순위") {
+                        Picker("우선순위", selection: $priority) {
+                            Text("낮음").tag(TodoPriority.low)
+                            Text("보통").tag(TodoPriority.medium)
+                            Text("높음").tag(TodoPriority.high)
+                        }
+                        .pickerStyle(.segmented)
+                    }
+                    
+                    Section("마감일") {
+                        Toggle("마감일 설정", isOn: $showDatePicker)
+                        if showDatePicker {
+                            DatePicker("마감일", selection: Binding(
+                                get: { dueDate ?? Date() },
+                                set: { dueDate = $0 }
+                            ), displayedComponents: [.date, .hourAndMinute])
+                        }
+                    }
+                    
+                    Section("정보") {
+                        LabeledContent("생성일", value: todo.createdAt.formatted())
+                        LabeledContent("수정일", value: todo.updatedAt.formatted())
+                    }
                 }
-                .pickerStyle(.segmented)
-            }
-            Section("마감일") {
-                Toggle("마감일 설정", isOn: Binding(
-                    get: { dueDate != nil },
-                    set: { if !$0 { dueDate = nil } else { dueDate = Date() } }
-                ))
-                if dueDate != nil {
-                    DatePicker(
-                        "마감일",
-                        selection: Binding<Date>(
-                            get: { dueDate ?? Date() },
-                            set: { dueDate = $0 }
-                        ),
-                        displayedComponents: .date
-                    )
+                .navigationTitle("할 일 상세")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("저장") {
+                            viewModel.updateTodo(
+                                title: title,
+                                description: description.isEmpty ? nil : description,
+                                isCompleted: isCompleted,
+                                priority: priority,
+                                dueDate: showDatePicker ? dueDate : nil
+                            )
+                        }
+                    }
                 }
-            }
-            Section {
-                Button("변경사항 저장") {
-                    viewModel.updateTodo(
-                        title: title,
-                        description: description.isEmpty ? nil : description,
-                        isCompleted: isCompleted,
-                        priority: priority,
-                        dueDate: dueDate
-                    )
+                .onAppear {
+                    // Initialize state from todo
+                    title = todo.title
+                    description = todo.description ?? ""
+                    isCompleted = todo.isCompleted
+                    priority = todo.priority
+                    dueDate = todo.dueDate
+                    showDatePicker = todo.dueDate != nil
                 }
-                Button(viewModel.todo?.isCompleted == true ? "미완료로 전환" : "완료로 전환") {
-                    viewModel.toggleCompletion()
-                }
+            } else {
+                Text("할 일을 찾을 수 없습니다")
             }
         }
-        .onReceive(viewModel.$todo) { todo in
-            guard let todo = todo else { return }
-            self.title = todo.title
-            self.description = todo.description ?? ""
-            self.isCompleted = todo.isCompleted
-            self.priority = todo.priority
-            self.dueDate = todo.dueDate
+        .onAppear {
+            viewModel.loadTodo()
         }
-        .navigationTitle("할 일 상세")
-        .toolbar { ToolbarItem(placement: .principal) { Text(viewModel.todo?.title ?? "상세") } }
-        .alert(item: Binding(get: {
-            viewModel.error.map { ErrorWrapper(error: $0) }
-        }, set: { _ in viewModel.error = nil })) { wrapper in
-            Alert(title: Text("오류"), message: Text(wrapper.error.localizedDescription), dismissButton: .default(Text("확인")))
+        .alert("오류", isPresented: .constant(viewModel.error != nil)) {
+            Button("확인") {
+                viewModel.error = nil
+            }
+        } message: {
+            Text(viewModel.error?.localizedDescription ?? "")
         }
     }
 }
 
-private struct ErrorWrapper: Identifiable {
-    let id = UUID()
-    let error: Error
-}
-
 #Preview {
-    TodoDetailView(viewModel: TodoDetailViewModel(
-        getTodoUseCase: GetTodoUseCaseImpl(repository: DummyRepo()),
-        updateTodoUseCase: UpdateTodoUseCaseImpl(repository: DummyRepo()),
-        toggleCompletionUseCase: ToggleTodoCompletionUseCaseImpl(repository: DummyRepo())
-    ))
+    NavigationStack {
+        TodoDetailView(viewModel: TodoDetailViewModel(
+            todoId: UUID(),
+            todoUseCase: PreviewTodoUseCase()
+        ))
+    }
 }
 
-private struct DummyRepo: TodoRepository {
-    func getAllTodos() async throws -> [Todo] { [Todo(title: "샘플", description: "예시", priority: .high)] }
-    func getTodo(id: UUID) async throws -> Todo { Todo(title: "샘플") }
-    func addTodo(todo: Todo) async throws -> Todo { todo }
-    func updateTodo(todo: Todo) async throws -> Todo { todo }
-    func deleteTodo(id: UUID) async throws {}
+private struct PreviewTodoUseCase: TodoUseCaseProtocol {
+    func getAllTodos() async throws -> [Todo] {
+        return [Todo(title: "샘플", description: "예시", priority: .high)]
+    }
+    
+    func getTodo(id: UUID) async throws -> Todo {
+        return Todo(id: id, title: "샘플 할 일", description: "상세 설명", priority: .medium)
+    }
+    
+    func addTodo(todo: Todo) async throws -> Todo {
+        return todo
+    }
+    
+    func updateTodo(todo: Todo) async throws -> Todo {
+        return todo
+    }
+    
+    func deleteTodo(id: UUID) async throws {
+        // Do nothing
+    }
 }

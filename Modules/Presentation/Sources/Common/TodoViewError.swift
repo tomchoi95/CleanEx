@@ -1,13 +1,13 @@
 import Foundation
 
-enum TodoViewError: LocalizedError {
+public enum TodoViewError: LocalizedError {
     case failedToLoad
     case failedToCreate
     case failedToUpdate
     case failedToDelete
     case unknown
     
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .failedToLoad:
             return "할 일 목록을 불러오는데 실패했습니다."

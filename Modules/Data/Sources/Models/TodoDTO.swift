@@ -1,6 +1,7 @@
 import Foundation
+import Domain
 
-struct TodoDTO: Codable {
+public struct TodoDTO: Codable {
     let id: UUID
     let title: String
     let description: String?

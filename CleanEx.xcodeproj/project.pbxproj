@@ -3,109 +3,273 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 55;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		164D8E2318C1EF4E0CF78530 /* Presentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB1E1FBDADEBC18211561831 /* Presentation.framework */; };
+		3253A688A8DF339F0B4EE56E /* DI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 390E4EC3442DE42BDA9E46FC /* DI.framework */; };
+		44BEC96F40B971FDE240DC7B /* Presentation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BB1E1FBDADEBC18211561831 /* Presentation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5640A6AFA35C7EE0A8A631BC /* TuistAssets+CleanEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ECC5FE88E5909A196D0F58 /* TuistAssets+CleanEx.swift */; };
+		57C43EC0CCAE1E53D6351A60 /* TuistBundle+CleanEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE4AF24D66BB340DF256C7F /* TuistBundle+CleanEx.swift */; };
+		5B44F7676A65FDDB4382750A /* Domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 03B1F1058F61F17B42CAB2EE /* Domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8E8054245F0BF033B10A7906 /* CleanExApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38757080745ABAEE6481A0A5 /* CleanExApp.swift */; };
+		A33BC5A5070287112ACCAF77 /* Data.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A97C92AFA0AC938B1CB39A37 /* Data.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A497FF4D6E43C455204F77BF /* CleanExTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54A05E11FAF90F44ABD1F0A /* CleanExTests.swift */; };
+		AE1CBDE4ADBFA104988850C8 /* DI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 390E4EC3442DE42BDA9E46FC /* DI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E1677466AA02850C15B86085 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A207B2FB38A7B7C515938319 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		93AAE318665B479F4A449634 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D9A5A977E0464CC3B5B143A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA88C594100C58311E5664DD;
+			remoteInfo = CleanEx;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4B9C119DC4211E1497189779 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AE1CBDE4ADBFA104988850C8 /* DI.framework in Embed Frameworks */,
+				A33BC5A5070287112ACCAF77 /* Data.framework in Embed Frameworks */,
+				5B44F7676A65FDDB4382750A /* Domain.framework in Embed Frameworks */,
+				44BEC96F40B971FDE240DC7B /* Presentation.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE97322B24007096491D042A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		B3E69EAE2DB8878200C9851C /* CleanEx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanEx.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03B1F1058F61F17B42CAB2EE /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0620F6D640CFB5C9F28474C3 /* CleanEx-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CleanEx-Info.plist"; sourceTree = "<group>"; };
+		2EE4AF24D66BB340DF256C7F /* TuistBundle+CleanEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistBundle+CleanEx.swift"; sourceTree = "<group>"; };
+		38757080745ABAEE6481A0A5 /* CleanExApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanExApp.swift; sourceTree = "<group>"; };
+		390E4EC3442DE42BDA9E46FC /* DI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		48ECC5FE88E5909A196D0F58 /* TuistAssets+CleanEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistAssets+CleanEx.swift"; sourceTree = "<group>"; };
+		A207B2FB38A7B7C515938319 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A54A05E11FAF90F44ABD1F0A /* CleanExTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanExTests.swift; sourceTree = "<group>"; };
+		A97C92AFA0AC938B1CB39A37 /* Data.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Data.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB1E1FBDADEBC18211561831 /* Presentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Presentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C068C29B0480D3B2ECF8CF3C /* CleanExTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CleanExTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0733B451B3E74331264A2C6 /* CleanExTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CleanExTests-Info.plist"; sourceTree = "<group>"; };
+		E48BDCA7681DA270B7636B80 /* CleanEx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanEx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		B3E69EB02DB8878200C9851C /* CleanEx */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CleanEx;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
-		B3E69EAB2DB8878200C9851C /* Frameworks */ = {
+		006A2080A872CB881CA8DC56 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9E7C7F69949E519DE3C48460 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3253A688A8DF339F0B4EE56E /* DI.framework in Frameworks */,
+				164D8E2318C1EF4E0CF78530 /* Presentation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B3E69EA52DB8878200C9851C = {
+		330936404CE8005D881DF3F6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B3E69EB02DB8878200C9851C /* CleanEx */,
-				B3E69EAF2DB8878200C9851C /* Products */,
+				E48BDCA7681DA270B7636B80 /* CleanEx.app */,
+				C068C29B0480D3B2ECF8CF3C /* CleanExTests.xctest */,
+				A97C92AFA0AC938B1CB39A37 /* Data.framework */,
+				390E4EC3442DE42BDA9E46FC /* DI.framework */,
+				03B1F1058F61F17B42CAB2EE /* Domain.framework */,
+				BB1E1FBDADEBC18211561831 /* Presentation.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		40487D069A35A3B9ED3C5EE5 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				82E250A9C05D045803AF43F0 /* CleanEx */,
+				9BB7796DF22854D34B282A6A /* Derived */,
+			);
+			name = Project;
+			sourceTree = "<group>";
+		};
+		4AF267C0A4DB557B7C5DCBF1 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				48ECC5FE88E5909A196D0F58 /* TuistAssets+CleanEx.swift */,
+				2EE4AF24D66BB340DF256C7F /* TuistBundle+CleanEx.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		82E250A9C05D045803AF43F0 /* CleanEx */ = {
+			isa = PBXGroup;
+			children = (
+				F5523F85870ADDF3989B1AC5 /* Resources */,
+				B2C73D3B674F3237AE4C3A1F /* Sources */,
+				A28C6D4BB9B22A7064CBD374 /* Tests */,
+			);
+			path = CleanEx;
+			sourceTree = "<group>";
+		};
+		8AE8EC9B597BFB2C7FACAE3D = {
+			isa = PBXGroup;
+			children = (
+				40487D069A35A3B9ED3C5EE5 /* Project */,
+				330936404CE8005D881DF3F6 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		B3E69EAF2DB8878200C9851C /* Products */ = {
+		9BB7796DF22854D34B282A6A /* Derived */ = {
 			isa = PBXGroup;
 			children = (
-				B3E69EAE2DB8878200C9851C /* CleanEx.app */,
+				CE068C6C24F4CB6455E1A3AC /* InfoPlists */,
+				4AF267C0A4DB557B7C5DCBF1 /* Sources */,
 			);
-			name = Products;
+			path = Derived;
+			sourceTree = "<group>";
+		};
+		A28C6D4BB9B22A7064CBD374 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				A54A05E11FAF90F44ABD1F0A /* CleanExTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		B2C73D3B674F3237AE4C3A1F /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				38757080745ABAEE6481A0A5 /* CleanExApp.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		CE068C6C24F4CB6455E1A3AC /* InfoPlists */ = {
+			isa = PBXGroup;
+			children = (
+				0620F6D640CFB5C9F28474C3 /* CleanEx-Info.plist */,
+				E0733B451B3E74331264A2C6 /* CleanExTests-Info.plist */,
+			);
+			path = InfoPlists;
+			sourceTree = "<group>";
+		};
+		F5523F85870ADDF3989B1AC5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A207B2FB38A7B7C515938319 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B3E69EAD2DB8878200C9851C /* CleanEx */ = {
+		80F65C2E0C988C545FE164CD /* CleanExTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B3E69EB92DB8878300C9851C /* Build configuration list for PBXNativeTarget "CleanEx" */;
+			buildConfigurationList = 57F8D3D754013D7B193167B9 /* Build configuration list for PBXNativeTarget "CleanExTests" */;
 			buildPhases = (
-				B3E69EAA2DB8878200C9851C /* Sources */,
-				B3E69EAB2DB8878200C9851C /* Frameworks */,
-				B3E69EAC2DB8878200C9851C /* Resources */,
+				CDBD7F6508134A1FAB233EE6 /* Sources */,
+				6392D20B89DE000867C67DFC /* Resources */,
+				006A2080A872CB881CA8DC56 /* Frameworks */,
+				CE97322B24007096491D042A /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9FC5FAA197E8C63A603CB760 /* PBXTargetDependency */,
+			);
+			name = CleanExTests;
+			packageProductDependencies = (
+			);
+			productName = CleanExTests;
+			productReference = C068C29B0480D3B2ECF8CF3C /* CleanExTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FA88C594100C58311E5664DD /* CleanEx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 41E33CF52087018AEBA29331 /* Build configuration list for PBXNativeTarget "CleanEx" */;
+			buildPhases = (
+				A15BEDE670E8241C87E04E49 /* Sources */,
+				00FA9C3CEC5FC4792C642241 /* Resources */,
+				9E7C7F69949E519DE3C48460 /* Frameworks */,
+				4B9C119DC4211E1497189779 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				B3E69EB02DB8878200C9851C /* CleanEx */,
-			);
 			name = CleanEx;
 			packageProductDependencies = (
 			);
 			productName = CleanEx;
-			productReference = B3E69EAE2DB8878200C9851C /* CleanEx.app */;
+			productReference = E48BDCA7681DA270B7636B80 /* CleanEx.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		B3E69EA62DB8878200C9851C /* Project object */ = {
+		1D9A5A977E0464CC3B5B143A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1630;
-				LastUpgradeCheck = 1630;
+				BuildIndependentTargetsInParallel = YES;
 				TargetAttributes = {
-					B3E69EAD2DB8878200C9851C = {
-						CreatedOnToolsVersion = 16.3;
+					80F65C2E0C988C545FE164CD = {
+						TestTargetID = FA88C594100C58311E5664DD;
 					};
 				};
 			};
-			buildConfigurationList = B3E69EA92DB8878200C9851C /* Build configuration list for PBXProject "CleanEx" */;
+			buildConfigurationList = FC0133E29D826D93F2562B36 /* Build configuration list for PBXProject "CleanEx" */;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
-			mainGroup = B3E69EA52DB8878200C9851C;
-			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
-			productRefGroup = B3E69EAF2DB8878200C9851C /* Products */;
+			mainGroup = 8AE8EC9B597BFB2C7FACAE3D;
+			productRefGroup = 330936404CE8005D881DF3F6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B3E69EAD2DB8878200C9851C /* CleanEx */,
+				FA88C594100C58311E5664DD /* CleanEx */,
+				80F65C2E0C988C545FE164CD /* CleanExTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		B3E69EAC2DB8878200C9851C /* Resources */ = {
+		00FA9C3CEC5FC4792C642241 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1677466AA02850C15B86085 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6392D20B89DE000867C67DFC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -115,24 +279,131 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		B3E69EAA2DB8878200C9851C /* Sources */ = {
+		A15BEDE670E8241C87E04E49 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E8054245F0BF033B10A7906 /* CleanExApp.swift in Sources */,
+				5640A6AFA35C7EE0A8A631BC /* TuistAssets+CleanEx.swift in Sources */,
+				57C43EC0CCAE1E53D6351A60 /* TuistBundle+CleanEx.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDBD7F6508134A1FAB233EE6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A497FF4D6E43C455204F77BF /* CleanExTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		9FC5FAA197E8C63A603CB760 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CleanEx;
+			target = FA88C594100C58311E5664DD /* CleanEx */;
+			targetProxy = 93AAE318665B479F4A449634 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		B3E69EB72DB8878300C9851C /* Debug */ = {
+		0BCA849B87451D8F5AD9E2A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Derived/InfoPlists/CleanEx-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cleanex.app;
+				PRODUCT_NAME = CleanEx;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+					"$(inherited)",
+					DEBUG,
+				);
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		27CAC26F8FF36C1E5A77ECAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "Derived/InfoPlists/CleanExTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cleanex.app.tests;
+				PRODUCT_NAME = CleanExTests;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+					"$(inherited)",
+					DEBUG,
+				);
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CleanEx.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CleanEx";
+				TEST_TARGET_NAME = CleanEx;
+			};
+			name = Debug;
+		};
+		57030CE670B3730BC670B269 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Derived/InfoPlists/CleanEx-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cleanex.app;
+				PRODUCT_NAME = CleanEx;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8CB1FA36F61A62282B63EC9B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -159,12 +430,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 59FP2PXRXK;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -178,25 +448,47 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		B3E69EB82DB8878300C9851C /* Release */ = {
+		B6A7F5016C8AE614B9B7ECD7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "Derived/InfoPlists/CleanExTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cleanex.app.tests;
+				PRODUCT_NAME = CleanExTests;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CleanEx.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CleanEx";
+				TEST_TARGET_NAME = CleanEx;
+			};
+			name = Release;
+		};
+		FC2A33E5FD8FEFC78D2EA879 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -223,12 +515,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 59FP2PXRXK;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -236,94 +527,43 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		B3E69EBA2DB8878300C9851C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59FP2PXRXK;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.codegrove.Tom.CleanEx;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		B3E69EBB2DB8878300C9851C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59FP2PXRXK;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.codegrove.Tom.CleanEx;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B3E69EA92DB8878200C9851C /* Build configuration list for PBXProject "CleanEx" */ = {
+		41E33CF52087018AEBA29331 /* Build configuration list for PBXNativeTarget "CleanEx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B3E69EB72DB8878300C9851C /* Debug */,
-				B3E69EB82DB8878300C9851C /* Release */,
+				0BCA849B87451D8F5AD9E2A9 /* Debug */,
+				57030CE670B3730BC670B269 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B3E69EB92DB8878300C9851C /* Build configuration list for PBXNativeTarget "CleanEx" */ = {
+		57F8D3D754013D7B193167B9 /* Build configuration list for PBXNativeTarget "CleanExTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B3E69EBA2DB8878300C9851C /* Debug */,
-				B3E69EBB2DB8878300C9851C /* Release */,
+				27CAC26F8FF36C1E5A77ECAF /* Debug */,
+				B6A7F5016C8AE614B9B7ECD7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FC0133E29D826D93F2562B36 /* Build configuration list for PBXProject "CleanEx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8CB1FA36F61A62282B63EC9B /* Debug */,
+				FC2A33E5FD8FEFC78D2EA879 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = B3E69EA62DB8878200C9851C /* Project object */;
+	rootObject = 1D9A5A977E0464CC3B5B143A /* Project object */;
 }

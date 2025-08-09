@@ -2,19 +2,25 @@ import ProjectDescription
 
 let project = Project(
     name: "Domain",
+    organizationName: "com.cleanex",
     targets: [
-        .target(
+        Target(
             name: "Domain",
-            destinations: .iOS,
+            platform: .iOS,
             product: .framework,
             bundleId: "com.cleanex.domain",
-            sources: ["Sources/**"]
+            deploymentTarget: .iOS(targetVersion: "15.0", devices: .iphone),
+            infoPlist: .default,
+            sources: ["Sources/**"],
+            dependencies: []
         ),
-        .target(
+        Target(
             name: "DomainTests",
-            destinations: .iOS,
+            platform: .iOS,
             product: .unitTests,
             bundleId: "com.cleanex.domain.tests",
+            deploymentTarget: .iOS(targetVersion: "15.0", devices: .iphone),
+            infoPlist: .default,
             sources: ["Tests/**"],
             dependencies: [
                 .target(name: "Domain")

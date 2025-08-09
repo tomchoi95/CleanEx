@@ -1,29 +1,34 @@
-//
-//  CleanExApp.swift
-//  CleanEx
-//
-//  Created by 최범수 on 2025-04-23.
-//
-
 import SwiftUI
 import SwiftData
 import Presentation
-import DI
+import Domain
 import Data
 
 @main
 struct CleanExApp: App {
-    let container = DIContainer.shared
+    let container: ModelContainer
+    
+    init() {
+        do {
+            container = try ModelContainer(for: TodoLocalModel.self)
+        } catch {
+            fatalError("Failed to create ModelContainer: \(error)")
+        }
+    }
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(container)
+            ContentView(todoListView: makeTodoListView())
+                .modelContainer(container)
         }
-        .modelContainer(for: [TodoLocalModel.self]) { result in
-            if case .success(let modelContainer) = result {
-                container.configure(with: modelContainer.mainContext)
-            }
-        }
+    }
+    
+    private func makeTodoListView() -> TodoListView {
+        let context = container.mainContext
+        let dataSource = TodoLocalDataSourceImpl(modelContext: context)
+        let repository = TodoRepositoryImpl(dataSource: dataSource)
+        let useCase = Domain.TodoUseCaseImpl(repository: repository)
+        let viewModel = TodoListViewModel(todoUseCase: useCase)
+        return TodoListView(viewModel: viewModel)
     }
 }

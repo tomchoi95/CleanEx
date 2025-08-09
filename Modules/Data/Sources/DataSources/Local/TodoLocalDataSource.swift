@@ -1,7 +1,7 @@
 import Foundation
 import SwiftData
 
-protocol TodoLocalDataSource {
+public protocol TodoLocalDataSource {
     func getAllTodos() async throws -> [TodoDTO]
     func getTodo(id: UUID) async throws -> TodoDTO
     func addTodo(_ todo: TodoDTO) async throws -> TodoDTO
@@ -9,14 +9,14 @@ protocol TodoLocalDataSource {
     func deleteTodo(id: UUID) async throws
 }
 
-struct TodoLocalDataSourceImpl: TodoLocalDataSource {
+public struct TodoLocalDataSourceImpl: TodoLocalDataSource {
     private let modelContext: ModelContext
     
-    init(modelContext: ModelContext) {
+    public init(modelContext: ModelContext) {
         self.modelContext = modelContext
     }
     
-    func getAllTodos() async throws -> [TodoDTO] {
+    public func getAllTodos() async throws -> [TodoDTO] {
         let descriptor = FetchDescriptor<TodoLocalModel>(
             sortBy: [SortDescriptor<TodoLocalModel>(\.createdAt, order: .reverse)]
         )
@@ -35,7 +35,7 @@ struct TodoLocalDataSourceImpl: TodoLocalDataSource {
         }
     }
     
-    func getTodo(id: UUID) async throws -> TodoDTO {
+    public func getTodo(id: UUID) async throws -> TodoDTO {
         let descriptor = FetchDescriptor<TodoLocalModel>(
             predicate: #Predicate { $0.id == id }
         )
@@ -52,7 +52,7 @@ struct TodoLocalDataSourceImpl: TodoLocalDataSource {
         )
     }
     
-    func addTodo(_ todo: TodoDTO) async throws -> TodoDTO {
+    public func addTodo(_ todo: TodoDTO) async throws -> TodoDTO {
         let model = TodoLocalModel(
             id: todo.id,
             title: todo.title,
@@ -72,7 +72,7 @@ struct TodoLocalDataSourceImpl: TodoLocalDataSource {
         return todo
     }
     
-    func updateTodo(_ todo: TodoDTO) async throws -> TodoDTO {
+    public func updateTodo(_ todo: TodoDTO) async throws -> TodoDTO {
         let descriptor = FetchDescriptor<TodoLocalModel>(
             predicate: #Predicate { $0.id == todo.id }
         )
@@ -92,7 +92,7 @@ struct TodoLocalDataSourceImpl: TodoLocalDataSource {
         return todo
     }
     
-    func deleteTodo(id: UUID) async throws {
+    public func deleteTodo(id: UUID) async throws {
         let descriptor = FetchDescriptor<TodoLocalModel>(
             predicate: #Predicate { $0.id == id }
         )

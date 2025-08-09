@@ -2,15 +2,12 @@ import ProjectDescription
 
 let project = Project(
     name: "DI",
-    organizationName: "com.cleanex",
     targets: [
-        Target(
+        .target(
             name: "DI",
-            platform: .iOS,
+            destinations: .iOS,
             product: .framework,
             bundleId: "com.cleanex.di",
-            deploymentTarget: .iOS(targetVersion: "15.0", devices: .iphone),
-            infoPlist: .default,
             sources: ["Sources/**"],
             dependencies: [
                 .project(target: "Domain", path: "../Domain"),
@@ -18,13 +15,11 @@ let project = Project(
                 .project(target: "Presentation", path: "../Presentation")
             ]
         ),
-        Target(
+        .target(
             name: "DITests",
-            platform: .iOS,
+            destinations: .iOS,
             product: .unitTests,
             bundleId: "com.cleanex.di.tests",
-            deploymentTarget: .iOS(targetVersion: "15.0", devices: .iphone),
-            infoPlist: .default,
             sources: ["Tests/**"],
             dependencies: [
                 .target(name: "DI")
