@@ -27,6 +27,8 @@ struct TodoLocalDataSourceImpl: TodoLocalDataSource {
                 title: $0.title ,
                 description: $0.todoDescription,
                 isCompleted: $0.isCompleted,
+                priority: $0.priority,
+                dueDate: $0.dueDate,
                 createdAt: $0.createdAt,
                 updatedAt: $0.updatedAt
             )
@@ -43,6 +45,8 @@ struct TodoLocalDataSourceImpl: TodoLocalDataSource {
             title: todo.title,
             description: todo.todoDescription,
             isCompleted: todo.isCompleted,
+            priority: todo.priority,
+            dueDate: todo.dueDate,
             createdAt: todo.createdAt,
             updatedAt: todo.updatedAt
         )
@@ -54,6 +58,8 @@ struct TodoLocalDataSourceImpl: TodoLocalDataSource {
             title: todo.title,
             todoDescription: todo.description,
             isCompleted: todo.isCompleted,
+            priority: todo.priority,
+            dueDate: todo.dueDate,
             createdAt: todo.createdAt,
             updatedAt: todo.updatedAt
         )
@@ -73,6 +79,9 @@ struct TodoLocalDataSourceImpl: TodoLocalDataSource {
         guard let todoModel = try modelContext.fetch(descriptor).first else { throw LocalDataSourceError.notFound }
         todoModel.title = todo.title
         todoModel.todoDescription = todo.description
+        todoModel.isCompleted = todo.isCompleted
+        todoModel.priority = todo.priority
+        todoModel.dueDate = todo.dueDate
         todoModel.createdAt = todo.createdAt
         todoModel.updatedAt = Date()
         do {
